@@ -20,7 +20,7 @@ secret_key = $SECRET_KEY
 " > ~/.s3cfg
 
 #copy the curriculum.xml file if a new one was created
-if [ -e ${CURRICULA_FOLDER}/${CODE}/${VERSION}/spliced.xml]; then
+if [ -e ${CURRICULA_FOLDER}/${CODE}/${VERSION}/spliced.xml ]; then
     echo "Updating spliced.xml"
     s3cmd del ${S3SERVER}/curricula/${SECRET_PATH_KEY}/${CODE}/${VERSION}/spliced.xml
     s3cmd put ${CURRICULA_FOLDER}/${CODE}/${VERSION}/spliced.xml ${S3SERVER}/curricula/${SECRET_PATH_KEY}/${CODE}/${VERSION}/spliced.xml
@@ -30,7 +30,7 @@ fi
 #start by deleting all the files in the assets bucket
 #this is weirdly complicated, you can't just use a wildcard
 #instead, we create an empty directory, sync against it, then delete the empty directory
-if [ `ls -A ${CURRICULA_FOLDER}/${CODE}/${VERSION}/assets` ]; then
+if [ "`ls -A ${CURRICULA_FOLDER}/${CODE}/${VERSION}/assets`" ]; then
     echo "Updating assets"
     mkdir empty_directory
     s3cmd sync --recursive --delete-removed --force empty_directory ${S3SERVER}/curricula/${SECRET_PATH_KEY}/${CODE}/${VERSION}/assets
