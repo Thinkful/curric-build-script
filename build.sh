@@ -7,8 +7,8 @@ npm link
 cd ..
 thinkdown --curric=${CURRICULA_FOLDER}
 
-#commit changes to github if we're not in the preview branch
-if [ -z "$PREVIEW" ]; then
+#commit changes to github if we're in the master branch
+if [ -n "$MASTER" ]; then
     git add content/structure.xml
     git config --global user.name "CircleCI"
     git commit -m "automatic commit of uuids after pushing to master [CI skip]"
