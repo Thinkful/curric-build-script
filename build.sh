@@ -7,11 +7,13 @@ npm link
 cd ..
 thinkdown --curric=${CURRICULA_FOLDER}
 
-#commit changes to github
-git add content/structure.xml
-git config --global user.name "CircleCI"
-git commit -m "automatic commit of uuids after pushing to master [CI skip]"
-git push origin master
+#commit changes to github if we're not in the preview branch
+if [ -z "$PREVIEW" ]; then
+    git add content/structure.xml
+    git config --global user.name "CircleCI"
+    git commit -m "automatic commit of uuids after pushing to master [CI skip]"
+    git push origin master
+fi
 
 #push changes to s3 server
 echo "[default]
