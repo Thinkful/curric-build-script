@@ -1,3 +1,21 @@
+#! /usr/bin/env bash
+
+if [ "$1" == "production" ]
+then
+  # production options
+  echo "Setting 'production' options."
+  export MASTER="true"
+fi
+
+if [ "$1" == "preview" ]
+then
+  # preview options
+  echo "Setting 'preview' options."
+  export S3SERVER=${PREVIEW_S3SERVER}
+  export ACCESS_KEY=${PREVIEW_ACCESS_KEY}
+  export SECRET_KEY=${PREVIEW_SECRET_KEY}
+fi
+
 #run thinkdown
 git clone https://${GITHUB_USERNAME}:${GITHUB_PASSWORD}@github.com/Thinkful/thinkdown
 npm install -g gulp
