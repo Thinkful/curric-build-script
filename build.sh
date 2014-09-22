@@ -27,6 +27,7 @@ thinkdown --curric=${CURRICULA_FOLDER}
 
 #commit changes to github if we're in the master branch
 if [ -n "$MASTER" ]; then
+    echo "Pushing structure.xml with uuid's to github"
     git add content/structure.xml
     git config --global user.name "CircleCI"
     git config --global user.email "circleci@thinkful.com"
@@ -42,7 +43,7 @@ secret_key = $SECRET_KEY
 
 #copy the curriculum.xml file if a new one was created
 if [ -e ${CURRICULA_FOLDER}/${CODE}/${VERSION}/spliced.xml ]; then
-    echo "Updating spliced.xml"
+    echo "Updating spliced.xml on ${S3SERVER}"
     s3cmd del ${S3SERVER}/curricula/${SECRET_PATH_KEY}/${CODE}/${VERSION}/spliced.xml
     s3cmd put ${CURRICULA_FOLDER}/${CODE}/${VERSION}/spliced.xml ${S3SERVER}/curricula/${SECRET_PATH_KEY}/${CODE}/${VERSION}/spliced.xml
 fi
@@ -52,7 +53,7 @@ fi
 #this is weirdly complicated, you can't just use a wildcard
 #instead, we create an empty directory, sync against it, then delete the empty directory
 if [ "`ls -A ${CURRICULA_FOLDER}/${CODE}/${VERSION}/assets`" ]; then
-    echo "Updating assets"
+    echo "Updating assets on ${S3SERVER}"
     mkdir empty_directory
     s3cmd sync --recursive --delete-removed --force empty_directory ${S3SERVER}/curricula/${SECRET_PATH_KEY}/${CODE}/${VERSION}/assets
     rm -rf empty_directory
