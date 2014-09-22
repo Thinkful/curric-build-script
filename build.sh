@@ -1,14 +1,12 @@
 #! /usr/bin/env bash
 
-if [ "$1" == "production" ]
-then
+if [ "$1" == "production" ]; then
   # production options
   echo "Setting 'production' options."
   export MASTER="true"
 fi
 
-if [ "$1" == "preview" ]
-then
+if [ "$1" == "preview" ]; then
   # preview options
   echo "Setting 'preview' options."
   export S3SERVER=${PREVIEW_S3SERVER}
@@ -23,7 +21,14 @@ cd thinkdown
 npm install
 npm link
 cd ..
-thinkdown --curric=${CURRICULA_FOLDER}
+thinkdown --curric=${CURRICULA_FOLDER} || { echo "Thinkdown failed." ; exit 1 }
+
+if [ -e ${CURRICULA_FOLDER}/${CODE}/${VERSION}/spliced.xml ]; then
+    echo "Thinkdown completed, spliced.xml exists."
+else
+    echo "Thinkdown exited, but seems to have failed, spliced.xml not found."
+    exit 1
+fi
 
 #commit changes to github if we're in the master branch
 if [ -n "$MASTER" ]; then
@@ -40,6 +45,11 @@ echo "[default]
 access_key = $ACCESS_KEY
 secret_key = $SECRET_KEY
 " > ~/.s3cfg
+
+####
+#### DEBUG
+####
+echo "debug ==> $CURRICULA_FOLDER/${CODE}/${VERSION}/spliced.xml"
 
 #copy the curriculum.xml file if a new one was created
 if [ -e ${CURRICULA_FOLDER}/${CODE}/${VERSION}/spliced.xml ]; then
