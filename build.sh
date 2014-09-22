@@ -50,12 +50,6 @@ access_key = $ACCESS_KEY
 secret_key = $SECRET_KEY
 " > ~/.s3cfg
 
-####
-#### DEBUG
-####
-echo "debug ==> $CURRICULA_FOLDER/${CODE}/${VERSION}/spliced.xml"
-exit 1
-
 #copy the curriculum.xml file if a new one was created
 if [ -e ${CURRICULA_FOLDER}/${CODE}/${VERSION}/spliced.xml ]
 then
