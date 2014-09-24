@@ -18,7 +18,7 @@ npm install
 npm link
 cd ..
 echo "****** Running thinkdown2 ******"
-thinkdown2 --build=${CURRICULA_FOLDER}/thinkdown2/${CODE}/${VERSION}
+thinkdown2 --build=${CURRICULA_FOLDER}/thinkdown2/${CODE}/${VERSION} --source="content"
 
 if [ -e ${CURRICULA_FOLDER}/${CODE}/${VERSION}/spliced.xml ]
 then
