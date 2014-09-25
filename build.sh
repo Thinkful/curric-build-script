@@ -14,6 +14,7 @@ thinkdown --curric=${CURRICULA_FOLDER}
 
 echo "****** Installing thinkdown2 ******"
 cd thinkdown2
+git checkout errors-and-color
 npm install
 npm link
 cd ..
