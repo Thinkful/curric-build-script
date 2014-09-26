@@ -81,3 +81,12 @@ then
     rm -rf empty_directory
     s3cmd put --recursive ${CURRICULA_FOLDER}/${CODE}/${VERSION}/assets/* ${S3SERVER}/curricula/${SECRET_PATH_KEY}/${CODE}/${VERSION}/assets/
 fi
+
+if [ "`ls -A ${CURRICULA_FOLDER}/thinkdown2/${CODE}/${VERSION}/assets`" ]
+then
+    echo "Updating thinkdown2 assets on ${S3SERVER}"
+    mkdir empty_directory
+    s3cmd sync --recursive --delete-removed --force empty_directory ${S3SERVER}/curricula/${SECRET_PATH_KEY}/${CODE}/${VERSION}/assets2
+    rm -rf empty_directory
+    s3cmd put --recursive ${CURRICULA_FOLDER}/thinkdown2/${CODE}/${VERSION}/assets/* ${S3SERVER}/curricula/${SECRET_PATH_KEY}/${CODE}/${VERSION}/assets2/
+fi
