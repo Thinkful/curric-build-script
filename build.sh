@@ -1,42 +1,30 @@
+#! /usr/bin/env bash
+
 #run thinkdown
 git clone https://${GITHUB_USERNAME}:${GITHUB_PASSWORD}@github.com/Thinkful/thinkdown
+git clone https://${GITHUB_USERNAME}:${GITHUB_PASSWORD}@github.com/Thinkful/eagle-flavored-thinkdown thinkdown2
 npm install -g gulp
+echo "****** Installing legacy thinkdown ******"
 cd thinkdown
 npm install
 npm link
 cd ..
+echo "****** Running thinkdown (one) ******"
 thinkdown --curric=${CURRICULA_FOLDER}
 
-#commit changes to github if we're in the master branch
-if [ -n "$MASTER" ]; then
-    git add content/structure.xml
-    git config --global user.name "CircleCI"
-    git config --global user.email "circleci@thinkful.com"
-    git commit -m "automatic commit of uuids after pushing to master [CI skip]"
-    git push origin master
+echo "****** Installing thinkdown2 ******"
+cd thinkdown2
+npm install
+npm link
+cd ..
+echo "****** Running thinkdown2 ******"
+thinkdown2 --build=${CURRICULA_FOLDER}/thinkdown2/${CODE}/${VERSION}
+
+if [ -e ${CURRICULA_FOLDER}/${CODE}/${VERSION}/spliced.xml ]
+then
+    echo "Thinkdown completed, spliced.xml exists."
+else
+    echo "Thinkdown exited, but seems to have failed, spliced.xml not found."
+    exit 1
 fi
 
-#push changes to s3 server
-echo "[default]
-access_key = $ACCESS_KEY
-secret_key = $SECRET_KEY
-" > ~/.s3cfg
-
-#copy the curriculum.xml file if a new one was created
-if [ -e ${CURRICULA_FOLDER}/${CODE}/${VERSION}/spliced.xml ]; then
-    echo "Updating spliced.xml"
-    s3cmd del ${S3SERVER}/curricula/${SECRET_PATH_KEY}/${CODE}/${VERSION}/spliced.xml
-    s3cmd put ${CURRICULA_FOLDER}/${CODE}/${VERSION}/spliced.xml ${S3SERVER}/curricula/${SECRET_PATH_KEY}/${CODE}/${VERSION}/spliced.xml
-fi
-
-#copy all the assets if assets exist
-#start by deleting all the files in the assets bucket
-#this is weirdly complicated, you can't just use a wildcard
-#instead, we create an empty directory, sync against it, then delete the empty directory
-if [ "`ls -A ${CURRICULA_FOLDER}/${CODE}/${VERSION}/assets`" ]; then
-    echo "Updating assets"
-    mkdir empty_directory
-    s3cmd sync --recursive --delete-removed --force empty_directory ${S3SERVER}/curricula/${SECRET_PATH_KEY}/${CODE}/${VERSION}/assets
-    rm -rf empty_directory
-    s3cmd put --recursive ${CURRICULA_FOLDER}/${CODE}/${VERSION}/assets/* ${S3SERVER}/curricula/${SECRET_PATH_KEY}/${CODE}/${VERSION}/assets/
-fi
