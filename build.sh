@@ -9,14 +9,16 @@ cd thinkdown
 npm install
 npm link
 cd ..
-echo "****** Running thinkdown (one) ******"
-thinkdown --curric=${CURRICULA_FOLDER}
 
 echo "****** Installing thinkdown2 ******"
 cd thinkdown2
 npm install
 npm link
 cd ..
+
+echo "****** Running thinkdown (Legacy) ******"
+thinkdown --curric=${CURRICULA_FOLDER}
+
 echo "****** Running thinkdown2 ******"
 thinkdown2 --build=${CURRICULA_FOLDER}/thinkdown2/${CODE}/${VERSION}
 
