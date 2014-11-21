@@ -36,14 +36,6 @@ access_key = $ACCESS_KEY
 secret_key = $SECRET_KEY
 " > ~/.s3cfg
 
-# Copy the spliced.xml file if a new one was created
-if [ -e ${CURRICULA_FOLDER}/${CODE}/${VERSION}/spliced.xml ]
-then
-    echo "Updating spliced.xml on ${S3SERVER}"
-    s3cmd del ${S3SERVER}/curricula/${SECRET_PATH_KEY}/${CODE}/${VERSION}/spliced.xml
-    s3cmd put ${CURRICULA_FOLDER}/${CODE}/${VERSION}/spliced.xml ${S3SERVER}/curricula/${SECRET_PATH_KEY}/${CODE}/${VERSION}/spliced.xml
-fi
-
 # Copy the curriculum.json file if a new one was created
 # NOTE: thinkdown2 should be removed from local path when we migrate
 if [ -e ${CURRICULA_FOLDER}/thinkdown2/${CODE}/${VERSION}/curriculum.json ]
@@ -57,15 +49,6 @@ fi
 #start by deleting all the files in the assets bucket
 #this is weirdly complicated, you can't just use a wildcard
 #instead, we create an empty directory, sync against it, then delete the empty directory
-if [ "`ls -A ${CURRICULA_FOLDER}/${CODE}/${VERSION}/assets`" ]
-then
-    echo "Updating assets on ${S3SERVER}"
-    mkdir empty_directory
-    s3cmd sync --recursive --delete-removed --force empty_directory ${S3SERVER}/curricula/${SECRET_PATH_KEY}/${CODE}/${VERSION}/assets
-    rm -rf empty_directory
-    s3cmd put --recursive ${CURRICULA_FOLDER}/${CODE}/${VERSION}/assets/* ${S3SERVER}/curricula/${SECRET_PATH_KEY}/${CODE}/${VERSION}/assets/
-fi
-
 if [ "`ls -A ${CURRICULA_FOLDER}/thinkdown2/${CODE}/${VERSION}/assets`" ]
 then
     echo "Updating thinkdown2 assets on ${S3SERVER}"
