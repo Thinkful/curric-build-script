@@ -36,13 +36,13 @@ access_key = $ACCESS_KEY
 secret_key = $SECRET_KEY
 " > ~/.s3cfg
 
-# Copy the marketing.json file if a new one was created
+# Copy the syllabus.json file if a new one was created
 # NOTE: thinkdown2 should be removed from local path when we migrate
-if [ -e ${CURRICULA_FOLDER}/thinkdown2/${CODE}/${VERSION}/marketing.json ]
+if [ -e ${CURRICULA_FOLDER}/thinkdown2/${CODE}/${VERSION}/syllabus.json ]
 then
-    echo "Updating marketing.json on ${S3SERVER}"
-    s3cmd del ${S3SERVER}/syllabus/${CODE}/${VERSION}/marketing.json
-    s3cmd put ${CURRICULA_FOLDER}/thinkdown2/${CODE}/${VERSION}/marketing.json ${S3SERVER}/syllabus/${CODE}/${VERSION}/marketing.json
+    echo "Updating syllabus.json on ${S3SERVER}"
+    s3cmd del ${S3SERVER}/syllabus/${CODE}/${VERSION}/syllabus.json
+    s3cmd put ${CURRICULA_FOLDER}/thinkdown2/${CODE}/${VERSION}/syllabus.json ${S3SERVER}/syllabus/${CODE}/${VERSION}/syllabus.json
 fi
 
 # Copy the curriculum.json file if a new one was created
