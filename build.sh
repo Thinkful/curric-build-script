@@ -1,7 +1,7 @@
 #! /usr/bin/env bash
 
 #run thinkdown
-git clone https://${GITHUB_USERNAME}:${GITHUB_PASSWORD}@github.com/Thinkful/eagle-flavored-thinkdown thinkdown2
+git clone -b feature/safe-load-yaml https://${GITHUB_USERNAME}:${GITHUB_PASSWORD}@github.com/Thinkful/eagle-flavored-thinkdown thinkdown2
 npm install -g gulp
 
 echo "****** Installing thinkdown2 ******"
