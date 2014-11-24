@@ -15,9 +15,15 @@ thinkdown2 --build=${CURRICULA_FOLDER}/thinkdown2/${CODE}/${VERSION}
 
 if [ -e ${CURRICULA_FOLDER}/thinkdown2/${CODE}/${VERSION}/curriculum.json ]
 then
-    echo "Thinkdown completed, curriculum.json exists."
+    echo "Thinkdown completed and curriculum.json exists."
 else
     echo "Thinkdown exited, it has failed, curriculum.json not found."
     exit 1
 fi
 
+if [ -e ${CURRICULA_FOLDER}/thinkdown2/${CODE}/${VERSION}/syllabus.json ]
+then
+    echo "syllabus.json exists."
+else
+    echo "syllabus.json does not exist."
+fi
