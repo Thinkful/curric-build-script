@@ -1,7 +1,15 @@
 #! /usr/bin/env bash
 
+#set target
+if [ "$CIRCLE_BRANCH" == "test-deploy-script" ]
+then
+    export TARGET="production"
+else
+    export TARGET="preview"
+fi
+
 #run thinkdown
-git clone -b feature/safe-load-yaml https://${GITHUB_USERNAME}:${GITHUB_PASSWORD}@github.com/Thinkful/eagle-flavored-thinkdown thinkdown2
+git clone https://${GITHUB_USERNAME}:${GITHUB_PASSWORD}@github.com/Thinkful/eagle-flavored-thinkdown thinkdown2
 npm install -g gulp
 
 echo "****** Installing thinkdown2 ******"
@@ -11,7 +19,8 @@ npm link
 cd ..
 
 echo "****** Running thinkdown2 ******"
-thinkdown2 --build=${CURRICULA_FOLDER}/thinkdown2/${CODE}/${VERSION}
+echo "thinkdown2 $TARGET --build=$CURRICULA_FOLDER/thinkdown2/$CODE/$VERSION"
+thinkdown2 $TARGET --build=${CURRICULA_FOLDER}/thinkdown2/${CODE}/${VERSION}
 
 if [ -e ${CURRICULA_FOLDER}/thinkdown2/${CODE}/${VERSION}/curriculum.json ]
 then
