@@ -1,17 +1,12 @@
 #! /usr/bin/env bash
 
-# Set environment variables
-echo $1
-echo 
-if [ "$1" == "production" ]
+#set target
+if [ "$CIRCLE_BRANCH" == "master" ]
 then
-  # production options
-  echo "Setting target as 'production'."
-  export TARGET="production"
+    export TARGET="production"
 else
-  export TARGET="preview"
+    export TARGET="preview"
 fi
-
 
 #run thinkdown
 git clone https://${GITHUB_USERNAME}:${GITHUB_PASSWORD}@github.com/Thinkful/eagle-flavored-thinkdown thinkdown2
@@ -24,6 +19,7 @@ npm link
 cd ..
 
 echo "****** Running thinkdown2 ******"
+echo "thinkdown2 $TARGET --build=$CURRICULA_FOLDER/thinkdown2/$CODE/$VERSION"
 thinkdown2 $TARGET --build=${CURRICULA_FOLDER}/thinkdown2/${CODE}/${VERSION}
 
 if [ -e ${CURRICULA_FOLDER}/thinkdown2/${CODE}/${VERSION}/curriculum.json ]
