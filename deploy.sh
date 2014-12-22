@@ -20,11 +20,15 @@ fi
 if [ -n "$MASTER" ]
 then
     echo "Pushing structure.xml with uuid's to github"
+    git add -u content
     git add content/structure.xml
     git config --global user.name "CircleCI"
     git config --global user.email "circleci@thinkful.com"
     git commit -m "automatic commit of uuids after pushing to master [CI skip]"
-    git push origin master
+    git push origin master --force
+    git checkout preview --force
+    git merge --no-ff master
+    git push origin preview --force
 fi
 
 #
