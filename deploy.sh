@@ -27,7 +27,7 @@ then
     git commit -m "automatic commit of uuids after pushing to master [CI skip]"
     git push origin master --force
     git checkout preview --force
-    git merge --no-ff master
+    git merge --no-ff master -m="preview < master [CI skip]"
     git push origin preview --force
 fi
 
