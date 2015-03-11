@@ -9,7 +9,7 @@ else
 fi
 
 #run thinkdown
-git clone https://${GITHUB_USERNAME}:${GITHUB_PASSWORD}@github.com/Thinkful/eagle-flavored-thinkdown thinkdown2
+git clone git@github.com:Thinkful/eagle-flavored-thinkdown.git thinkdown2
 npm install -g gulp
 
 echo "****** Installing thinkdown2 ******"
