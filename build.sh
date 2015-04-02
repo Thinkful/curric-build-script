@@ -8,11 +8,15 @@ else
     export TARGET="preview"
 fi
 
-echo "****** Installing gulp ******"
+#run thinkdown
+git clone git@github.com:Thinkful/eagle-flavored-thinkdown.git thinkdown2
 npm install -g gulp
 
 echo "****** Installing thinkdown2 ******"
-npm install -g thunderbird
+cd thinkdown2
+npm install
+npm link
+cd ..
 
 echo "****** Running thinkdown2 ******"
 echo "thinkdown2 $TARGET --build=$CURRICULA_FOLDER/thinkdown2/$CODE/$VERSION"
