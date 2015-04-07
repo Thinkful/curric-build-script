@@ -8,29 +8,25 @@ else
     export TARGET="preview"
 fi
 
-#run thinkdown
-git clone git@github.com:Thinkful/eagle-flavored-thinkdown.git thinkdown2
+#run thunderbird
+echo "****** Installing thunderbird ******"
 npm install -g gulp
+npm install -g thunderbird
 
-echo "****** Installing thinkdown2 ******"
-cd thinkdown2
-npm install
-npm link
-cd ..
 
-echo "****** Running thinkdown2 ******"
-echo "thinkdown2 $TARGET --build=$CURRICULA_FOLDER/thinkdown2/$CODE/$VERSION"
-thinkdown2 $TARGET --build=${CURRICULA_FOLDER}/thinkdown2/${CODE}/${VERSION}
+echo "****** Running thunderbird ******"
+echo "thunderbird $TARGET --build=$CURRICULA_FOLDER/thunderbird/$CODE/$VERSION"
+thunderbird $TARGET --build=${CURRICULA_FOLDER}/thunderbird/${CODE}/${VERSION}
 
-if [ -e ${CURRICULA_FOLDER}/thinkdown2/${CODE}/${VERSION}/curriculum.json ]
+if [ -e ${CURRICULA_FOLDER}/thunderbird/${CODE}/${VERSION}/curriculum.json ]
 then
-    echo "Thinkdown completed and curriculum.json exists."
+    echo "Thunderbird completed and curriculum.json exists."
 else
-    echo "Thinkdown exited, it has failed, curriculum.json not found."
+    echo "Thunderbird exited, it has failed, curriculum.json not found."
     exit 1
 fi
 
-if [ -e ${CURRICULA_FOLDER}/thinkdown2/${CODE}/${VERSION}/syllabus.json ]
+if [ -e ${CURRICULA_FOLDER}/thunderbird/${CODE}/${VERSION}/syllabus.json ]
 then
     echo "syllabus.json exists."
 else
