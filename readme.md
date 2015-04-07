@@ -2,7 +2,8 @@
 
 This script is used by each curriculum's CI script to:
 
- - Run Thinkdown
+ - Install thunderbird (npm install -g thunderbird)
+ - Run it on the curriculum
  - Commit UUID's to structure.xml
  - Commit and Push the modified structure.xml to GitHub
  - Delete existing spliced.xml on s3
