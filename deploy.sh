@@ -29,7 +29,7 @@ then
     if [[ $PUSH_MASTER_OUTPUT =~ "ERROR" ]]
     then
       echo $PUSH_MASTER_OUTPUT
-      echo "Aborting, error pushing to GitHub. This curriculum a read+write key in CI."
+      echo "Aborting, error pushing to GitHub. This curriculum needs a read+write key in CI."
       exit 1
     fi
 
