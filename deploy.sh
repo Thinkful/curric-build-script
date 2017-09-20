@@ -81,5 +81,5 @@ fi
 if [ -n "$MASTER" ]
 then
     echo "Bumping curriculum version"
-    curl -X POST -H "Content-Type: application/json" --data '{"secret_key":"'$SECRET_PATH_KEY'"}' https://www.thinkful.com/webhooks/update_criculum_version
+    curl -X POST -H "Content-Type: application/json" --data '{"secret_key":"'$SECRET_PATH_KEY'"}' https://www.thinkful.com/webhooks/update_curriculum_version
 fi
