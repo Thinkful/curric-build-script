@@ -77,3 +77,9 @@ then
     rm -rf empty_directory
     s3cmd put --recursive ${CURRICULA_FOLDER}/thunderbird/${CODE}/${VERSION}/assets/* ${S3SERVER}/curricula/${SECRET_PATH_KEY}/${CODE}/${VERSION}/assets2/
 fi
+
+if [ -n "$MASTER" ]
+then
+    echo "Bumping curriculum version"
+    curl -X POST -H "Content-Type: application/json" --data '{"secret_key":"'$SECRET_PATH_KEY'"}' https://www.thinkful.com/webhooks/update_criculum_version
+fi
