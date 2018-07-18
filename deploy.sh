@@ -24,7 +24,12 @@ then
     git add content/structure.xml
     git config --global user.name "CircleCI"
     git config --global user.email "circleci@thinkful.com"
+
+    # don't fail if there's nothing to commit
+    set +e
     git commit -m "automatic commit of uuids after pushing to master [CI skip]"
+    set -e
+
     PUSH_MASTER_OUTPUT=$(git push origin master --force 2>&1)
     if [[ $PUSH_MASTER_OUTPUT =~ "ERROR" ]]
     then
